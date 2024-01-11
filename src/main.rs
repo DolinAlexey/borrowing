@@ -1,4 +1,5 @@
 #[warn(dead_code)]
+#[warn(clippy::needless_range_loop)]
 
 fn main() {
     let mut tuple: (u8, u8) = (11, 48);
@@ -40,7 +41,8 @@ fn split_to_four<T>(slice: &[T]) -> [&[T]; 4] {
     let _size = (len + 3) / 4; // округление вверх до ближайшего целого
     let mut result = [&[][..]; 4];
 
-    for i in 0..4 {
+    for (i, <item>) in result.iter_mut().enumerate() {
+
         let start = i * _size;
         let end = (i + 1) * _size;
         result[i] = &slice[start..end];
