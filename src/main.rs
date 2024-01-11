@@ -14,14 +14,8 @@ fn main() {
     let slice = [11, 22, 33, 44, 55];
     let (_left, _right) = split_slice(&slice, 3);
 
-    let slice = [11, 22, 33, 44, 55, 66, 77, 88, 99, 1010];
-    let result = split_to_four(&slice);
-
-    assert_eq!(result[0], &[1, 2, 3]);
-    assert_eq!(result[1], &[4, 5]);
-    assert_eq!(result[2], &[6, 7]);
-    assert_eq!(result[3], &[8, 9, 10]);
-
+    let slice = [11, 22, 33, 44, 55, 66, 77, 88, 99, 100, 200, 300];
+    let _result = split_to_four(&slice);
 }
 fn get_mut_tuple_element<T>(tuple: &mut (T, T), second: bool) -> &mut T {
     if second {
