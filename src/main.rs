@@ -13,6 +13,15 @@ fn main() {
 
     let slice = [11, 22, 33, 44, 55];
     let (_left, _right) = split_slice(&slice, 3);
+
+    let slice = [11, 22, 33, 44, 55, 66, 77, 88, 99, 1010];
+    let result = split_to_four(&slice);
+
+    assert_eq!(result[0], &[1, 2, 3]);
+    assert_eq!(result[1], &[4, 5]);
+    assert_eq!(result[2], &[6, 7]);
+    assert_eq!(result[3], &[8, 9, 10]);
+
 }
 fn get_mut_tuple_element<T>(tuple: &mut (T, T), second: bool) -> &mut T {
     if second {
@@ -31,4 +40,17 @@ fn get_slice_element_from_end<T>(slice: &[T], index_from_end: usize) -> &T {
 fn split_slice<T>(slice: &[T], n: usize) -> (&[T], &[T]) {
     let (left, right) = slice.split_at(n);
     (left, right)
+}
+fn split_to_four<T>(slice: &[T]) -> [&[T]; 4] {
+    let len = slice.len();
+    let _size = (len + 3) / 4; // округление вверх до ближайшего целого
+    let mut result = [&[][..]; 4];
+
+    for i in 0..4 {
+        let start = i * _size;
+        let end = (i + 1) * _size;
+        result[i] = &slice[start..end];
+    }
+
+    result
 }
