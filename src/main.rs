@@ -12,7 +12,7 @@ fn main() {
     let _third_element_from_end = get_slice_element_from_end(&slice, 2);
 
     let slice = [11, 22, 33, 44, 55];
-    let (left, right) = split_slice(&slice, 3);
+    let (_left, _right) = split_slice(&slice, 3);
 }
 fn get_mut_tuple_element<T>(tuple: &mut (T, T), second: bool) -> &mut T {
     if second {
