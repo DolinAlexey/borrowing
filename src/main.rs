@@ -42,7 +42,6 @@ fn split_to_four<T>(slice: &[T]) -> [&[T]; 4] {
     let mut result = [&[][..]; 4];
 
     for (i, <item>) in result.iter_mut().enumerate() {
-
         let start = i * _size;
         let end = (i + 1) * _size;
         result[i] = &slice[start..end];
