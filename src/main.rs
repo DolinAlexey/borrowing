@@ -9,7 +9,7 @@ fn main() {
     let _third_element = get_mut_slice_element(&mut slice, 2);
 
     let slice = [1, 2, 3, 4];
-    let third_element_from_end = get_slice_element_from_end(&slice, 2);
+    let _third_element_from_end = get_slice_element_from_end(&slice, 2);
 }
 fn get_mut_tuple_element<T>(tuple: &mut (T, T), second: bool) -> &mut T {
     if second {
