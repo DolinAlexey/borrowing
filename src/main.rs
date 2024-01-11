@@ -41,7 +41,7 @@ fn split_to_four<T>(slice: &[T]) -> [&[T]; 4] {
     let _size = (len + 3) / 4; // округление вверх до ближайшего целого
     let mut result = [&[][..]; 4];
 
-    for i in result.iter_mut().enumerate() {
+    for i in 1..4 {
         let start = i * _size;
         let end = (i + 1) * _size;
         result[i] = &slice[start..end];
