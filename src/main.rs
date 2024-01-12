@@ -3,55 +3,72 @@
 
 fn main() {
     let mut tuple: (u8, u8) = (11, 48);
-    let _first_element = get_mut_tuple_element(&mut tuple, false);
-    let _second_element = get_mut_tuple_element(&mut tuple, true);
+    let _first_element = get_mutable_reference_tuple(&mut tuple, false);
+    let _second_element = get_mutable_reference_tuple(&mut tuple, true);
 
     let mut slice = [1, 2, 3, 4];
-    let _third_element = get_mut_slice_element(&mut slice, 2);
+    let _third_element = get_mutable_reference_slice(&mut slice, 2);
 
     let slice = [11, 22, 33, 44];
-    let _third_element_from_end = get_slice_element_from_end(&slice, 2);
+    let _third_element_from_end = get_slice_and_number_n(&slice, 2);
 
     let slice = [11, 22, 33, 44, 55];
-    let (_left, _right) = split_slice(&slice, 3);
+    let (_left, _right) = get_slice_and_number_n_return_two_slides(&slice, 3);
 
     let slice = [11, 22, 33, 44, 55, 66, 77, 88, 99, 100, 200, 300];
-    let _result = split_to_four(&slice);
+    let _result = get_slice_and_return_four_equal_parts(&slice);
+
+    let mut slice = [1, 2, 3, 4];
+    let (left, right) = get_slice_and_number_n_return_two_slides(&mut slice, 2);
+    let (left1, left2) = get_slice_and_number_n_return_two_slides(&mut slice, 1); // ошибка компиляции
+
+
 }
-fn get_mut_tuple_element<T>(tuple: &mut (T, T), second: bool) -> &mut T {
-    if second {
+
+//Принимает мутабельную ссылку на кортеж и bool значение.
+fn get_mutable_reference_tuple<T>(tuple: &mut (T, T), bool_value: bool) -> &mut T {
+    if bool_value {
         &mut tuple.1
     } else {
         &mut tuple.0
     }
 }
-fn get_mut_slice_element<T>(slice: &mut [T], index: usize) -> &mut T {
-    &mut slice[index]
+
+//Принимает мутабельную ссылку на слайс и число N. Возвращает мутабельную ссылку на N-ый элемент.
+fn get_mutable_reference_slice<T>(slice: &mut [T], n: usize) -> &mut T {
+    &mut slice[n]
 }
 
-fn get_slice_element_from_end<T>(slice: &[T], index_from_end: usize) -> &T {
-    &slice[slice.len() - 1 - index_from_end]
+//Принимает слайс и число N. Возвращает ссылку на N-ый элемент слайса с конца.
+fn get_slice_and_number_n<T>(slice: &[T], n: usize) -> &T {
+    &slice[slice.len() - 1 - n]
 }
-fn split_slice<T>(slice: &[T], n: usize) -> (&[T], &[T]) {
-    let (left, right) = slice.split_at(n);
-    (left, right)
+
+//Принимает слайс и число N. Возвращает два слайса с элементами:
+// с нулевого по N-1;
+// с N-го по последний;
+fn get_slice_and_number_n_return_two_slides<T>(slice: &[T], n: usize) -> (&[T], &[T]) {
+    let (from_zero_to_n_minus_1, fron_nth_to_last) = slice.split_at(n);
+    (from_zero_to_n_minus_1, fron_nth_to_last)
 }
-fn split_to_four<T>(slice: &[T]) -> [&[T]; 4] {
+
+//Принимает слайс и возвращает массив слайсов, содержащий четыре равные (насколько возможно) части исходного слайса.
+// Протестировать функции.
+// Убедиться, что копилятор не позволит вернуть более одной мутабельной ссылки на один объект.
+fn get_slice_and_return_four_equal_parts<T>(slice: &[T]) -> [&[T]; 4] {
     let len = slice.len();
-    let _size = (len + 3) / 4; // округление вверх до ближайшего целого
+    let _size = (len + 3) / 4;
     let mut result = [&[][..]; 4];
 
     let mut start = 0;
-    let chunk_size = slice.len() / result.len();
-    let mut end = chunk_size;
-    for chunk in result.iter_mut().skip(1) {
-        let slice_chunk = &slice[start..end];
-        *chunk = slice_chunk;
+    let fragment_size = slice.len() / result.len();
+    let mut end = fragment_size;
+    for fragment in result.iter_mut().skip(1) {
+        let slice_fragment = &slice[start..end];
+        *fragment = slice_fragment;
         start = end;
-        end += chunk_size;
+        end += fragment_size;
     }
-
-
     result
 }
 
