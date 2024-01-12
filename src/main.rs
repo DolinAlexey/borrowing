@@ -1,6 +1,7 @@
 #[warn(dead_code)]
 #[warn(clippy::needless_range_loop)]
 
+
 fn main() {
     let mut tuple: (u8, u8) = (11, 48);
     let _first_element = get_mutable_reference_tuple(&mut tuple, false);
@@ -17,12 +18,8 @@ fn main() {
 
     let slice = [11, 22, 33, 44, 55, 66, 77, 88, 99, 100, 200, 300];
     let _result = get_slice_and_return_four_equal_parts(&slice);
-
-    let mut slice = [1, 2, 3, 4];
-    let (left, right) = get_slice_and_number_n_return_two_slides(&mut slice, 2);
-    let (left1, left2) = get_slice_and_number_n_return_two_slides(&mut slice, 1); // ошибка компиляции
-
-
+    let (_left, _right) = get_slice_and_number_n_return_two_slides(&slice, 2);
+    //let (_left1, _left2) = get_slice_and_number_n_return_two_slides(&mut slice, 1); // Убедиться, что копилятор не позволит вернуть более одной мутабельной ссылки на один объект.
 }
 
 //Принимает мутабельную ссылку на кортеж и bool значение.
@@ -71,4 +68,3 @@ fn get_slice_and_return_four_equal_parts<T>(slice: &[T]) -> [&[T]; 4] {
     }
     result
 }
-
